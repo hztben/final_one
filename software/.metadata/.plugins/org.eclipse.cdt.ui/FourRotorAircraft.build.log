@@ -1,0 +1,17 @@
+
+**** Build of configuration Nios II for project FourRotorAircraft ****
+
+make all 
+Info: Building ../FourRotorAircraft_bsp/
+make --no-print-directory -C ../FourRotorAircraft_bsp/
+[BSP build complete]
+Info: Compiling controller/controller.c to obj/controller/controller.o
+nios2-elf-gcc -xc -MP -MMD -c -I../FourRotorAircraft_bsp//HAL/inc -I../FourRotorAircraft_bsp/ -I../FourRotorAircraft_bsp//drivers/inc -Iapp -Icontroller -Ifbm320 -Ii2c -Ijy901 -Ipwm -Itimer -Ius100  -DSYSTEM_BUS_WIDTH=32 -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -EL -mno-hw-div -mhw-mul -mno-hw-mulx  -o obj/controller/controller.o controller/controller.c
+Info: Linking FourRotorAircraft.elf
+nios2-elf-g++  -T'../FourRotorAircraft_bsp//linker.x' -msys-crt0='../FourRotorAircraft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../FourRotorAircraft_bsp/   -Wl,-Map=FourRotorAircraft.map   -O0 -g -Wall   -EL -mno-hw-div -mhw-mul -mno-hw-mulx  -o FourRotorAircraft.elf obj/app/app.o obj/controller/controller.o obj/fbm320/fbm320.o obj/i2c/i2c_opencores.o obj/jy901/jy901.o obj/main.o obj/pwm/pwm.o obj/timer/timer.o obj/us100/us100.o -lm 
+nios2-elf-insert FourRotorAircraft.elf --thread_model hal --cpu_name cpu_0 --simulation_enabled false --id 0 --sidp 0x40820f8 --timestamp 1505013133 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name nios2 --quartus_project_dir "C:/Users/Ben/Desktop/final_one" --jdi C:/Users/Ben/Desktop/final_one/UAV.jdi
+Info: (FourRotorAircraft.elf) 87 KBytes program size (code + initialized data).
+Info:                         32680 KBytes free for stack + heap.
+Info: Creating FourRotorAircraft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source FourRotorAircraft.elf >FourRotorAircraft.objdump
+[FourRotorAircraft build complete]

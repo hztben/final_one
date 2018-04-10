@@ -1,0 +1,8 @@
+
+**** Build of configuration Nios II for project uavuav ****
+
+make all 
+Info: Building ../uavuav_bsp/
+make --no-print-directory -C ../uavuav_bsp/
+[BSP build complete]
+[uavuav build complete]

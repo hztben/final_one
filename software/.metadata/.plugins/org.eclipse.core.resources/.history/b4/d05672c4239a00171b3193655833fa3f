@@ -1,0 +1,69 @@
+/*
+ * jy901.c
+ *
+ *  Created on: 2017-9-10
+ *      Author: Ben
+ */
+
+#include "stdio.h"
+#include "system.h"
+#include "alt_types.h"
+#include "../i2c/i2c_opencores.h"
+#include "JY901.h"
+
+float standardRoll = 0;
+float standardPitch = 0;
+float standardYaw = 0;
+
+/****************************************************************
+void write_JY901
+     this function is to write the JY901's registers.
+inputs
+      Register_Address = the  address of the registers
+      Data = Required data to be written
+
+*****************************************************************/
+void write_JY901(alt_u8 Register_Address,alt_u8 Data)
+{
+	I2C_start(OPENCORES_I2C_JY901_BASE,JY901_ADDRESS,0);
+	I2C_write(OPENCORES_I2C_JY901_BASE,Register_Address,0);
+	I2C_write(OPENCORES_I2C_JY901_BASE,Data,1);
+}
+
+
+/****************************************************************
+void read_JY901
+     this function is to read the JY901's registers.
+inputs
+     Register_Address = the  address of the registers
+
+*****************************************************************/
+float read_JY901(alt_u8 Register_Address)
+{
+	 alt_u8 dataHigh=0;
+	 alt_u8 dataLow=0;
+	 alt_u16 data = 0;
+	 float angle;
+	 I2C_start(OPENCORES_I2C_JY901_BASE,JY901_ADDRESS,0);        //address the chip in write mode
+	 I2C_write(OPENCORES_I2C_JY901_BASE,Register_Address,0);     // set command to read input register.
+	 I2C_start(OPENCORES_I2C_JY901_BASE,JY901_ADDRESS,1);        //send start again but this time in read mode
+	 dataLow=I2C_read(OPENCORES_I2C_JY901_BASE,0);
+	 dataHigh=I2C_read(OPENCORES_I2C_JY901_BASE,1);
+
+	 data=dataHigh<<8|dataLow;
+	 angle = (float)data/32768*180;
+	 return(angle);                 				// read the input register and send stop
+}
+
+void JY901Init(){
+	I2C_init(OPENCORES_I2C_JY901_BASE,ALT_CPU_FREQ,100000);
+	standardAngle.roll = read_JY901(Roll);
+	standardRoll = read_JY901(Roll);
+	standardPitch = read_JY901(Pitch);
+	standardYaw = read_JY901(Yaw);
+	printf("standardRoll: %f\n",standardRoll);
+	printf("standardPitch: %f\n",standardPitch);
+	printf("standardYaw: %f\n",standardYaw);
+}
+
+

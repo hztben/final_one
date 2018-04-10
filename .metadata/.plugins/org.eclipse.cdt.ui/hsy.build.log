@@ -1,0 +1,8 @@
+
+**** Build of configuration Nios II for project hsy ****
+
+make all 
+Info: Building ../hsy_bsp/
+make --no-print-directory -C ../hsy_bsp/
+[BSP build complete]
+[hsy build complete]
